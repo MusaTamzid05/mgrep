@@ -7,6 +7,8 @@ import (
 
 func main() {
 
-	operations.ShowMatches("./main.go", "main")
+
+	replacer := operations.MakeReplacer("cpp")
+	replacer.Run("/Users/musakhan/c++_pro/image_operation_from_scratch", "")
 
 }
