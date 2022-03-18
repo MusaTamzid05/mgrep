@@ -5,10 +5,14 @@ import (
 )
 
 
+func Replace(searchDir, srcStr, dstStr, fileExt string) {
+	replacer := operations.MakeReplacer(fileExt)
+	replacer.Run(searchDir, srcStr, dstStr)
+}
+
+
+
 func main() {
-
-
-	replacer := operations.MakeReplacer("cpp")
-	replacer.Run(".", "main", "zet")
+	Replace(".", ",main", "zet", "cpp")
 
 }
