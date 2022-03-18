@@ -70,13 +70,37 @@ func (m* Matcher) showMatches(filePath string, target string) error  {
 		return err
 	}
 
-	fmt.Println("Path\t\tIndex\t\tLine")
+	//fmt.Println("Path\t\tIndex\t\tLine")
 
 	for index, line := range lines {
 		if strings.Contains(line, target) {
-			fmt.Println(filePath, "\t", index + 1, "\t\t", line)
+			//fmt.Println(filePath, "\t", index + 1, "\t\t", line)
+			m.prettyPrint(filePath, line, index)
 		}
 	}
 
 	return nil
+}
+
+func (m *Matcher) prettyPrint(filePath, line string, index int) {
+	filePathSpaceCount := 80
+	spaceCount := filePathSpaceCount - len(filePath)
+	fmt.Printf("%s ", filePath)
+
+
+	for i := 0; i < spaceCount; i += 1 {
+		fmt.Printf(" ")
+	}
+
+	fmt.Printf("%s ", line)
+	spaceCount = filePathSpaceCount - len(line)
+
+	for i := 0; i < spaceCount; i += 1 {
+		fmt.Printf(" ")
+	}
+
+	fmt.Printf("%d ", index)
+	fmt.Printf("\n")
+
+
 }
