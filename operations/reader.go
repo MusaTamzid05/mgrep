@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"strings"
 	"fmt"
+	"path/filepath"
 )
 
 func ReadLines(filePath string) ([]string, error ) {
@@ -29,7 +30,39 @@ func ReadLines(filePath string) ([]string, error ) {
 	return lines, nil
 }
 
-func ShowMatches(filePath string, target string) error  {
+
+type Matcher struct {
+	fileExt string
+}
+
+func MakeMatcher(fileExt string) Matcher{
+	return Matcher{fileExt : fileExt}
+}
+
+
+func (m* Matcher) Run(dirPath , target string) {
+	err := filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {
+
+		if strings.HasSuffix(path, m.fileExt) == false {
+			return nil
+		}
+
+		err =  m.showMatches(path, target)
+
+		if err != nil {
+			return err
+		}
+		return nil
+
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+
+func (m* Matcher) showMatches(filePath string, target string) error  {
 
 	lines, err := ReadLines(filePath)
 
