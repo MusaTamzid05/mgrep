@@ -87,20 +87,19 @@ func (m *Matcher) prettyPrint(filePath, line string, index int) {
 	spaceCount := filePathSpaceCount - len(filePath)
 	fmt.Printf("%s ", filePath)
 
-
-	for i := 0; i < spaceCount; i += 1 {
-		fmt.Printf(" ")
-	}
+	m.generateSpace(spaceCount)
 
 	fmt.Printf("%s ", line)
 	spaceCount = filePathSpaceCount - len(line)
 
-	for i := 0; i < spaceCount; i += 1 {
-		fmt.Printf(" ")
-	}
+	m.generateSpace(spaceCount)
 
 	fmt.Printf("%d ", index)
 	fmt.Printf("\n")
+}
 
-
+func (m *Matcher) generateSpace(spaceCount int) {
+	for i := 0; i < spaceCount; i += 1 {
+		fmt.Printf(" ")
+	}
 }
