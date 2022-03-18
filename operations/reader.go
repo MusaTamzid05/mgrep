@@ -41,6 +41,7 @@ func MakeMatcher(fileExt string) Matcher{
 
 
 func (m* Matcher) Run(dirPath , target string) {
+	m.prettyPrint("","", -1)
 	err := filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {
 
 		if strings.HasSuffix(path, m.fileExt) == false {
@@ -70,11 +71,10 @@ func (m* Matcher) showMatches(filePath string, target string) error  {
 		return err
 	}
 
-	//fmt.Println("Path\t\tIndex\t\tLine")
+
 
 	for index, line := range lines {
 		if strings.Contains(line, target) {
-			//fmt.Println(filePath, "\t", index + 1, "\t\t", line)
 			m.prettyPrint(filePath, line, index)
 		}
 	}
@@ -83,6 +83,12 @@ func (m* Matcher) showMatches(filePath string, target string) error  {
 }
 
 func (m *Matcher) prettyPrint(filePath, line string, index int) {
+
+	if index == -1 {
+		// means its the header, handle accordingly.
+		filePath = "File Path"
+		line = "Line"
+	}
 	filePathSpaceCount := 80
 	spaceCount := filePathSpaceCount - len(filePath)
 	fmt.Printf("%s ", filePath)
@@ -94,7 +100,13 @@ func (m *Matcher) prettyPrint(filePath, line string, index int) {
 
 	m.generateSpace(spaceCount)
 
-	fmt.Printf("%d ", index)
+
+	if index == -1 {
+		fmt.Printf("Line no") // header
+
+	} else {
+		fmt.Printf("%d ", index)
+	}
 	fmt.Printf("\n")
 }
 
